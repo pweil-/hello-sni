@@ -1,0 +1,23 @@
+{
+    "id": "tls-server",
+    "kind": "Pod",
+    "apiVersion":"v1beta2",
+    "labels": {
+        "name": "tls-server"
+    },
+    "desiredState": {
+        "manifest": {
+            "version": "v1beta1",
+            "id": "tls-server",
+            "containers": [{
+                "name": "tls-server",
+                "image": "pweil/tls-server",
+                "ports": [
+                    {
+                        "containerPort": 9999
+                    }
+                ]
+            }]
+        }
+    }
+}

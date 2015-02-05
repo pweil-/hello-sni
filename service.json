@@ -1,0 +1,10 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1beta1",
+    "id": "tls-service",
+    "port": 2999,
+    "containerPort": 9999,
+    "selector": {
+        "name": "tls-server"
+    }
+}

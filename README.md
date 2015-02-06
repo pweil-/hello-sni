@@ -8,6 +8,10 @@ Demonstrates a TLS tcp client connecting through the OpenShift router to a TLS t
 1.  Create the pod, service, and route
 1.  Run the client
 
+If you're not using the single machine vagrant environment you may need to adjust the ip address in the client.  The client
+points to 10.0.2.15 which is the default ip for the vagrant machine and is also the entry point for the router since the
+router binds to host ports.
+
 ```
 [vagrant@openshiftdev paul_temp]$ osc get pods && osc get services && osc get routes
 POD                 IP                  CONTAINER(S)                   IMAGE(S)                          HOST                           LABELS              STATUS

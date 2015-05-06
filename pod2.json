@@ -3,21 +3,22 @@
   "apiVersion":"v1beta3",
 
   "metadata": {
-  	"name": "tls-server",
+  	"name": "tls-server2",
   	"labels": {
-    		"name": "tls-server"
+    		"tls-server": "tls-server"
   	}
   },
 
   "spec": {
       "containers": [{
-        "name": "tls-server",
+        "name": "tls-server2",
         "image": "pweil/tls-server",
         "ports": [
           {
             "containerPort": 9999
           }
-        ]
+        ],
+        "args": ["/usr/sbin/server", "-msg=test2"]
       }]
   }
 }

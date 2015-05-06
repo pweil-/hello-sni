@@ -2,8 +2,9 @@ package main
 
 import (
 	"crypto/tls"
-	"fmt"
 	"crypto/x509"
+	"flag"
+	"fmt"
 	"net"
 )
 
@@ -69,7 +70,7 @@ j9tQAbS867yeOryNe7sEOIpXAAqK/DTu0hB6+ySsDfMo4piXCc2aA/eI2DCuw08e
 w17Dz9WnupZjVdwTKzDhFgJZMLDqn37HQnT6EemLFqbcR0VPEnfyhDtZIQ==
 -----END CERTIFICATE-----`
 
-func makeCertPool() (tls.Certificate, *x509.CertPool){
+func makeCertPool() (tls.Certificate, *x509.CertPool) {
 	privateKey := []byte(ExampleKey)
 	cert := []byte(ExampleCert)
 	caCert := []byte(ExampleCACert)
@@ -89,8 +90,10 @@ func makeCertPool() (tls.Certificate, *x509.CertPool){
 	return tlsCert, certPool
 }
 
+var message string
+
 func handleClient(conn net.Conn) {
-	_, err := fmt.Fprintf(conn, "Hello TLS\n")
+	_, err := fmt.Fprintf(conn, message+"\n")
 	if err != nil {
 		fmt.Printf("Error on connection:%v", err)
 	}
@@ -99,18 +102,21 @@ func handleClient(conn net.Conn) {
 }
 
 func main() {
+	flag.StringVar(&message, "msg", "Hello TLS", "The message to display")
+	flag.Parse()
+
 	tlsCert, certPool := makeCertPool()
 
 	cfg := &tls.Config{
 		Certificates: []tls.Certificate{tlsCert},
-		RootCAs: certPool,
-		ClientCAs: certPool,
-		ClientAuth: tls.NoClientCert,
+		RootCAs:      certPool,
+		ClientCAs:    certPool,
+		ClientAuth:   tls.NoClientCert,
 	}
 
 	listener, _ := tls.Listen("tcp", ":9999", cfg)
 
-	fmt.Printf("Listening for TCP connections on 9999\n")
+	fmt.Printf("Listening for TCP connections on 9999 and serving message %s \n", message)
 
 	for {
 		conn, err := listener.Accept()

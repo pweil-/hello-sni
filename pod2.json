@@ -5,7 +5,7 @@
   "metadata": {
   	"name": "tls-server2",
   	"labels": {
-    		"tls-server": "tls-server"
+    		"name": "tls-server"
   	}
   },
 
